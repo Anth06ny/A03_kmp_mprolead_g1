@@ -1,13 +1,19 @@
 package com.amonteiro.a03_kmp_mprolead_g1.presentation.ui.screens
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Preview(showBackground = true, showSystemUi = true, uiMode = 2)
 @Composable
@@ -23,5 +29,19 @@ fun SearchScreenPreview() {
 
 @Composable
 fun SearchScreen(modifier: Modifier = Modifier) {
-    Text(text = "Hello from SearchScreen", modifier = modifier)
+    Column(modifier= modifier) {
+        println("SearchScreen()")
+        Text(text = "Text1",fontSize = 20.sp)
+        Spacer(Modifier.size(8.dp))
+        Text(text = "Text2",fontSize = 14.sp)
+
+        PictureRowItem("C'est un texte1")
+        PictureRowItem("C'est un texte2")
+        PictureRowItem("C'est un texte3")
+    }
+}
+
+@Composable
+fun PictureRowItem(text :String){
+    Text(text = text,fontSize = 20.sp, color = Color.Blue)
 }
