@@ -7,6 +7,9 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
+
+    //kotlinxSerialization : kotlinversion
+    kotlin("plugin.serialization") version "2.1.0"
 }
 
 kotlin {
@@ -32,6 +35,9 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
+
+            //Client de requêtes spécifique à Android
+            implementation("io.ktor:ktor-client-okhttp:3.2.2")
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
@@ -42,6 +48,15 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+
+            // (les interfaces en gros)
+            implementation("io.ktor:ktor-client-core:3.2.2")
+            //Intégration avec la bibliothèque de serialisation, gestion des headers
+            implementation("io.ktor:ktor-client-content-negotiation:3.2.2")
+            //Serialisation JSON
+            implementation("io.ktor:ktor-serialization-kotlinx-json:3.2.2")
+            //Pour le logger
+            implementation("io.ktor:ktor-client-logging:3.2.2")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -49,6 +64,12 @@ kotlin {
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutinesSwing)
+            //Client de requêtes spécifique au bureau sur JVM donc même qu'Android
+            implementation("io.ktor:ktor-client-okhttp:3.2.2")
+        }
+        iosMain.dependencies {
+            //Client de requêtes spécifique à iOS
+            implementation("io.ktor:ktor-client-darwin:3.2.2")
         }
 
     }
