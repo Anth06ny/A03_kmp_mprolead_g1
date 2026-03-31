@@ -39,8 +39,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import com.amonteiro.a03_kmp_mprolead_g1.data.remote.PhotographerDTO
+import com.amonteiro.a03_kmp_mprolead_g1.presentation.Routes
 import com.amonteiro.a03_kmp_mprolead_g1.presentation.viewmodel.MainViewModel
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -58,7 +60,10 @@ fun SearchScreenPreview() {
 }
 
 @Composable
-fun SearchScreen(modifier: Modifier = Modifier, mainViewModel: MainViewModel = viewModel{ MainViewModel() }) {
+fun SearchScreen(modifier: Modifier = Modifier,
+                 mainViewModel: MainViewModel = viewModel{ MainViewModel() },
+                 navHostController : NavHostController? = null
+                 ) {
 
 
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
@@ -79,7 +84,9 @@ fun SearchScreen(modifier: Modifier = Modifier, mainViewModel: MainViewModel = v
             modifier = Modifier.weight(1f)
         ) {
             items(list.size) {
-                PictureRowItem(data = list[it])
+                PictureRowItem(data = list[it], onClick = {
+                    navHostController?.navigate(Routes.DetailRoute(list[it].id))
+                })
             }
         }
 
@@ -149,7 +156,7 @@ fun SearchBar(modifier: Modifier = Modifier, text:String,  onValueChange: (Strin
 }
 
 @Composable //Composable affichant 1 élément
-fun PictureRowItem(modifier: Modifier = Modifier, data: PhotographerDTO) {
+fun PictureRowItem(modifier: Modifier = Modifier, data: PhotographerDTO, onClick: () -> Unit) {
 
     var expended by remember { mutableStateOf(false) }
 
@@ -175,6 +182,7 @@ fun PictureRowItem(modifier: Modifier = Modifier, data: PhotographerDTO) {
             modifier = Modifier
                 .heightIn(max = 100.dp)
                 .widthIn(max = 100.dp)
+                .clickable(onClick = onClick)
         )
         Column(
             modifier = Modifier

@@ -9,7 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.amonteiro.a03_kmp_mprolead_g1.presentation.ui.screens.SearchScreen
+import com.amonteiro.a03_kmp_mprolead_g1.presentation.AppNavigation
 import com.amonteiro.a03_kmp_mprolead_g1.presentation.ui.theme.AppTheme
 
 
@@ -17,7 +17,7 @@ import com.amonteiro.a03_kmp_mprolead_g1.presentation.ui.theme.AppTheme
 @Composable
 fun App() {
     AppTheme {
-        SearchScreen()
+        AppNavigation()
         //Experience()
 //        var showContent by remember { mutableStateOf(false) }
 //        Column(
