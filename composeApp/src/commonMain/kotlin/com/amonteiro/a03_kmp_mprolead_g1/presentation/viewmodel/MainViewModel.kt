@@ -1,8 +1,13 @@
 package com.amonteiro.a03_kmp_mprolead_g1.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.amonteiro.a03_kmp_mprolead_g1.data.remote.PhotographerAPI
 import com.amonteiro.a03_kmp_mprolead_g1.data.remote.PhotographerDTO
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
     val dataList = MutableStateFlow(emptyList<PhotographerDTO>())
@@ -12,6 +17,22 @@ class MainViewModel : ViewModel() {
     init {//Création d'un jeu de donnée au démarrage
         println("Instanciation de MainViewModel")
         loadFakeData()
+    }
+
+    fun loadPhotographer() {
+        runInProgress.value = true
+
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                dataList.value = PhotographerAPI.loadPhotographers()
+            }
+            catch(e:Exception){
+                e.printStackTrace()
+                errorMessage.value = e.message ?: "Une erreur"
+            }
+            runInProgress.value = false
+        }
+
     }
 
     fun loadFakeData(runInProgress :Boolean = false, errorMessage:String = "" ) {

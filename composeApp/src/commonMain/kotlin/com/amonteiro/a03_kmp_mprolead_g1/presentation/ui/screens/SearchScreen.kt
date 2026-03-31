@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import com.amonteiro.a03_kmp_mprolead_g1.data.remote.PhotographerDTO
 import com.amonteiro.a03_kmp_mprolead_g1.presentation.viewmodel.MainViewModel
@@ -57,7 +58,9 @@ fun SearchScreenPreview() {
 }
 
 @Composable
-fun SearchScreen(modifier: Modifier = Modifier, mainViewModel: MainViewModel = MainViewModel()) {
+fun SearchScreen(modifier: Modifier = Modifier, mainViewModel: MainViewModel = viewModel{ MainViewModel() }) {
+
+
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
 
         var searchText by remember { mutableStateOf("") }
@@ -96,7 +99,7 @@ fun SearchScreen(modifier: Modifier = Modifier, mainViewModel: MainViewModel = M
                 Text("Clear")
             }
             Button(
-                onClick = { /* Do something! */ },
+                onClick = { mainViewModel.loadPhotographer() },
                 contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
                 modifier = Modifier.weight(1f)
             ) {
